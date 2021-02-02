@@ -1,5 +1,6 @@
 defmodule ExmonWeb.Router do
   use ExmonWeb, :router
+  alias Exmon
 
   scope "/", ExmonWeb do
     get "/", WelcomeController, :index
@@ -27,7 +28,7 @@ defmodule ExmonWeb.Router do
 
     scope "/" do
       pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: ExmonWeb.Telemetry
+      live_dashboard "/dashboard", metrics: ExmonWeb.Telemetry, ecto_repos: [Exmon.Repo]
     end
   end
 end
