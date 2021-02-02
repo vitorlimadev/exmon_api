@@ -1,5 +1,4 @@
 defmodule Exmon.Trainer do
-  alias Exmon.Repo
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -10,6 +9,12 @@ defmodule Exmon.Trainer do
     field :password_hash, :string
     field :password, :string, virtual: true
     timestamps()
+  end
+
+  def build(params) do
+    params
+    |> changeset()
+    |> apply_action(:insert)
   end
 
   @required_params [:name, :password]
@@ -23,7 +28,6 @@ defmodule Exmon.Trainer do
 
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Argon2.add_hash(password))
-    |> Repo.insert()
   end
 
   defp put_pass_hash(%Ecto.Changeset{valid?: false} = changeset), do: changeset

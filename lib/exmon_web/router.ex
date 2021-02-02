@@ -1,12 +1,18 @@
 defmodule ExmonWeb.Router do
   use ExmonWeb, :router
 
+  scope "/", ExmonWeb do
+    get "/", WelcomeController, :index
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/api", ExmonWeb do
     pipe_through :api
+
+    resources "/trainers", TrainersController, only: [:create, :show, :update, :delete]
   end
 
   # Enables LiveDashboard only for development
@@ -23,11 +29,5 @@ defmodule ExmonWeb.Router do
       pipe_through [:fetch_session, :protect_from_forgery]
       live_dashboard "/dashboard", metrics: ExmonWeb.Telemetry
     end
-  end
-
-  scope "/", ExmonWeb do
-    pipe_through :api
-
-    get "/", WelcomeController, :index
   end
 end
