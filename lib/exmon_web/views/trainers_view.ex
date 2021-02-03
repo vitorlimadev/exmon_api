@@ -14,11 +14,14 @@ defmodule ExmonWeb.TrainersView do
     }
   end
 
-  def render("show.json", %{changeset: %Trainer{id: id, name: name, inserted_at: inserted_at}}) do
+  def render("show.json", %{
+        changeset: %Trainer{id: id, name: name, inserted_at: inserted_at, updated_at: updated_at}
+      }) do
     %{
       id: id,
       name: name,
-      inserted_at: inserted_at
+      inserted_at: inserted_at,
+      updated_at: updated_at
     }
   end
 
