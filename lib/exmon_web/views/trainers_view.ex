@@ -13,4 +13,18 @@ defmodule ExmonWeb.TrainersView do
       }
     }
   end
+
+  def render("show.json", %{changeset: %Trainer{id: id, name: name, inserted_at: inserted_at}}) do
+    %{
+      id: id,
+      name: name,
+      inserted_at: inserted_at
+    }
+  end
+
+  def render("delete.json", %{changeset: %Trainer{name: name}}) do
+    %{
+      message: "#{name} deleted."
+    }
+  end
 end
